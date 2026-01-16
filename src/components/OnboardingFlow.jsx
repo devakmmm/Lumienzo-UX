@@ -29,6 +29,7 @@ import {
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import LumienzoLogo from './LumienzoLogo';
+import { FlipWords } from './ui/FlipWords';
 
 const YELLOW = '#FEFD7F';
 const BLACK = '#18181B';
@@ -41,57 +42,68 @@ const benefits = {
   persona: {
     title: "Direct Connections",
     description: "No middlemen. No agency fees. Connect directly with the world's top brands and creators.",
-    icon: <Users className="w-8 h-8" style={{ color: BLACK }} />
+    icon: <Users className="w-8 h-8" style={{ color: BLACK }} />,
+    flipWords: ["better", "faster", "smarter", "direct"]
   },
   connect: {
     title: "Secure & Private",
     description: "Bank-level security. We only request limited read-only permissions to verify your reach.",
-    icon: <ShieldCheck className="w-8 h-8" style={{ color: BLACK }} />
+    icon: <ShieldCheck className="w-8 h-8" style={{ color: BLACK }} />,
+    flipWords: ["secure", "private", "safe", "protected"]
   },
   portfolio: {
     title: "Showcase Your Best",
     description: "Build a stunning portfolio that gets you noticed by premium brands.",
-    icon: <Sparkles className="w-8 h-8" style={{ color: BLACK }} />
+    icon: <Sparkles className="w-8 h-8" style={{ color: BLACK }} />,
+    flipWords: ["stunning", "beautiful", "impressive", "professional"]
   },
   profile: {
     title: "AI-Powered Matching",
     description: "Our algorithm finds perfect brand partnerships based on your unique style and audience.",
-    icon: <Target className="w-8 h-8" style={{ color: BLACK }} />
+    icon: <Target className="w-8 h-8" style={{ color: BLACK }} />,
+    flipWords: ["perfect", "ideal", "optimal", "precise"]
   },
   payment: {
     title: "Instant Payments",
     description: "Secure escrow payments. Get paid what you're worth, exactly when you finish.",
-    icon: <DollarSign className="w-8 h-8" style={{ color: BLACK }} />
+    icon: <DollarSign className="w-8 h-8" style={{ color: BLACK }} />,
+    flipWords: ["instant", "fast", "immediate", "quick"]
   },
   terms: {
     title: "Fair & Transparent",
     description: "Clear contracts. No hidden fees. 100% of your earnings go directly to you.",
-    icon: <FileText className="w-8 h-8" style={{ color: BLACK }} />
+    icon: <FileText className="w-8 h-8" style={{ color: BLACK }} />,
+    flipWords: ["fair", "transparent", "honest", "clear"]
   },
   brandIdentity: {
     title: "Zero Commission",
     description: "Pay creators directly. No agency tax. Save thousands on every campaign.",
-    icon: <TrendingUp className="w-8 h-8" style={{ color: BLACK }} />
+    icon: <TrendingUp className="w-8 h-8" style={{ color: BLACK }} />,
+    flipWords: ["zero", "free", "direct", "unlimited"]
   },
   brandTeam: {
     title: "Team Collaboration",
     description: "Invite your team. Set permissions. Streamline approvals across your organization.",
-    icon: <UserPlus className="w-8 h-8" style={{ color: BLACK }} />
+    icon: <UserPlus className="w-8 h-8" style={{ color: BLACK }} />,
+    flipWords: ["seamless", "efficient", "smooth", "organized"]
   },
   brandDNA: {
     title: "AI Brand Matching",
     description: "We analyze your brand aesthetic to find creators who perfectly match your vibe.",
-    icon: <Palette className="w-8 h-8" style={{ color: BLACK }} />
+    icon: <Palette className="w-8 h-8" style={{ color: BLACK }} />,
+    flipWords: ["perfect", "matched", "aligned", "compatible"]
   },
   brandShield: {
     title: "Fraud Protection",
     description: "Advanced bot detection. Audience authenticity checks. Only real influencers, guaranteed.",
-    icon: <Shield className="w-8 h-8" style={{ color: BLACK }} />
+    icon: <Shield className="w-8 h-8" style={{ color: BLACK }} />,
+    flipWords: ["authentic", "verified", "real", "genuine"]
   },
   brandWorkflow: {
     title: "Automated Workflows",
     description: "Custom pipelines. Lumi AI handles the busywork. Focus on strategy, not admin.",
-    icon: <Settings className="w-8 h-8" style={{ color: BLACK }} />
+    icon: <Settings className="w-8 h-8" style={{ color: BLACK }} />,
+    flipWords: ["automated", "streamlined", "efficient", "smart"]
   }
 };
 
@@ -200,6 +212,10 @@ export default function OnboardingFlow({ onComplete }) {
             <h2 className="text-4xl font-bold mb-4 leading-tight" style={{ color: BLACK }}>
               {currentBenefit.title}
             </h2>
+            <div className="text-4xl font-normal mb-4 leading-tight" style={{ color: '#3f3f46' }}>
+              Build <FlipWords words={currentBenefit.flipWords || ["better", "faster", "smarter"]} /> <br />
+              partnerships
+            </div>
             <p className="text-lg leading-relaxed" style={{ color: '#3f3f46' }}>
               {currentBenefit.description}
             </p>
