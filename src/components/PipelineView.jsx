@@ -62,24 +62,24 @@ export default function PipelineView() {
   const [selectedCard, setSelectedCard] = useState(null);
 
   return (
-    <div className="p-8 space-y-6">
+    <div className="p-4 md:p-8 space-y-4 md:space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Automated Pipeline</h1>
-          <p className="text-zinc-500">Track every creator from brief to delivery</p>
+          <h1 className="text-2xl md:text-3xl font-bold mb-1 md:mb-2">Automated Pipeline</h1>
+          <p className="text-sm md:text-base text-zinc-500">Track every creator from brief to delivery</p>
         </div>
         
         <div className="flex items-center gap-3">
-          <div className="px-4 py-2 bg-white border border-zinc-200 rounded-xl">
-            <span className="text-sm font-bold text-zinc-500">Total Active: </span>
-            <span className="text-sm font-bold text-zinc-900">{Object.values(pipelineData).flat().length}</span>
+          <div className="px-3 md:px-4 py-2 bg-white border border-zinc-200 rounded-xl">
+            <span className="text-xs md:text-sm font-bold text-zinc-500">Total Active: </span>
+            <span className="text-xs md:text-sm font-bold text-zinc-900">{Object.values(pipelineData).flat().length}</span>
           </div>
         </div>
       </div>
 
       {/* Pipeline Board */}
-      <div className="flex gap-6 overflow-x-auto pb-6">
+      <div className="flex gap-4 md:gap-6 overflow-x-auto pb-4 md:pb-6 scrollbar-hide">
         {columns.map((column, index) => (
           <PipelineColumn 
             key={column.id} 
@@ -144,7 +144,7 @@ function PipelineColumn({ column, cards, index, onCardClick }) {
       initial={{ opacity: 0, x: -20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: index * 0.1 }}
-      className="flex-shrink-0 w-80"
+      className="flex-shrink-0 w-72 md:w-80"
     >
       {/* Column Header */}
       <div className={cn("rounded-xl border-2 p-4 mb-4", colorConfig[column.color])}>

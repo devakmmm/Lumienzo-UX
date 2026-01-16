@@ -73,38 +73,38 @@ export default function VettingEngine() {
   };
 
   return (
-    <div className="p-8 space-y-6">
+    <div className="p-4 md:p-8 space-y-4 md:space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold mb-2">Vetting Engine</h1>
-        <p className="text-zinc-500">AI-powered creator analysis & fraud detection</p>
+        <h1 className="text-2xl md:text-3xl font-bold mb-1 md:mb-2">Vetting Engine</h1>
+        <p className="text-sm md:text-base text-zinc-500">AI-powered creator analysis & fraud detection</p>
       </div>
 
       {/* Handle Scanner */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-3xl p-8 shadow-2xl relative overflow-hidden"
+        className="rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden"
         style={{ backgroundColor: YELLOW }}
       >
         <div className="absolute top-0 right-0 w-96 h-96 bg-black/5 rounded-full blur-3xl -translate-y-48 translate-x-48" />
         
         <div className="relative z-10">
-          <div className="flex items-center gap-3 mb-4" style={{ color: BLACK }}>
-            <Shield size={28} />
-            <h2 className="text-2xl font-bold">Handle Scanner</h2>
+          <div className="flex items-center gap-2 md:gap-3 mb-3 md:mb-4" style={{ color: BLACK }}>
+            <Shield size={24} className="md:w-7 md:h-7" />
+            <h2 className="text-xl md:text-2xl font-bold">Handle Scanner</h2>
           </div>
-          <p className="mb-6" style={{ color: BLACK, opacity: 0.8 }}>Paste any Instagram, TikTok, or YouTube handle to generate a Truth Report</p>
+          <p className="mb-4 md:mb-6 text-sm md:text-base" style={{ color: BLACK, opacity: 0.8 }}>Paste any Instagram, TikTok, or YouTube handle to generate a Truth Report</p>
           
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <div className="flex-1 relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" size={20} />
+              <Search className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 text-zinc-400" size={18} className="md:w-5 md:h-5" />
               <input
                 type="text"
                 value={handle}
                 onChange={(e) => setHandle(e.target.value)}
                 placeholder="@username or profile URL"
-                className="w-full bg-white text-zinc-900 rounded-xl py-4 pl-12 pr-4 focus:outline-none focus:ring-4 focus:ring-black/10 transition-all font-medium"
+                className="w-full bg-white text-zinc-900 rounded-xl py-3 md:py-4 pl-10 md:pl-12 pr-4 focus:outline-none focus:ring-4 focus:ring-black/10 transition-all font-medium text-sm md:text-base"
                 onKeyPress={(e) => e.key === 'Enter' && handleScan()}
               />
             </div>
@@ -113,7 +113,7 @@ export default function VettingEngine() {
               whileTap={{ scale: 0.98 }}
               onClick={handleScan}
               disabled={isScanning || !handle}
-              className="px-8 py-4 bg-zinc-900 text-white rounded-xl font-bold hover:bg-zinc-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-6 md:px-8 py-3 md:py-4 bg-zinc-900 text-white rounded-xl font-bold hover:bg-zinc-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm md:text-base"
             >
               {isScanning ? (
                 <>
@@ -121,7 +121,7 @@ export default function VettingEngine() {
                     animate={{ rotate: 360 }}
                     transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                   >
-                    <Sparkles size={20} />
+                    <Sparkles size={18} className="md:w-5 md:h-5" />
                   </motion.div>
                   Scanning...
                 </>
@@ -170,7 +170,7 @@ export default function VettingEngine() {
             </div>
 
             {/* The Dial Metrics */}
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
               <DialMetric
                 title="Compatibility Score"
                 score={scanResult.compatibilityScore}
@@ -193,7 +193,7 @@ export default function VettingEngine() {
             </div>
 
             {/* Red Flags & Green Flags */}
-            <div className="grid grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               {/* Red Flags */}
               <div className="bg-white rounded-2xl border border-zinc-200 p-6 shadow-sm">
                 <div className="flex items-center gap-2 mb-4">
@@ -301,12 +301,12 @@ export default function VettingEngine() {
             </div>
 
             {/* Actions */}
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-3">
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setIsPitchModalOpen(true)}
-                className="flex-1 py-4 rounded-xl font-bold transition-colors shadow-lg"
+                className="flex-1 py-3 md:py-4 rounded-xl font-bold transition-colors shadow-lg text-sm md:text-base"
                 style={{ backgroundColor: YELLOW, color: BLACK }}
               >
                 Send Campaign Pitch
@@ -314,7 +314,7 @@ export default function VettingEngine() {
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="px-8 py-4 bg-white border-2 border-zinc-200 text-zinc-900 rounded-xl font-bold hover:border-zinc-300 transition-colors"
+                className="px-6 md:px-8 py-3 md:py-4 bg-white border-2 border-zinc-200 text-zinc-900 rounded-xl font-bold hover:border-zinc-300 transition-colors text-sm md:text-base"
               >
                 Export Report
               </motion.button>
@@ -364,12 +364,12 @@ function DialMetric({ title, score, description, color, inverse = false }) {
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      className={cn("rounded-2xl border-2 p-6 text-center", config.bg, config.border)}
+      className={cn("rounded-xl md:rounded-2xl border-2 p-4 md:p-6 text-center", config.bg, config.border)}
     >
-      <h3 className="font-bold text-lg mb-2">{title}</h3>
-      <p className="text-xs text-zinc-500 mb-6">{description}</p>
+      <h3 className="font-bold text-base md:text-lg mb-1 md:mb-2">{title}</h3>
+      <p className="text-[10px] md:text-xs text-zinc-500 mb-4 md:mb-6">{description}</p>
       
-      <div className="relative w-40 h-40 mx-auto mb-4">
+      <div className="relative w-32 h-32 md:w-40 md:h-40 mx-auto mb-3 md:mb-4">
         <svg className="w-full h-full -rotate-90">
           <circle 
             cx="80" 
@@ -395,12 +395,12 @@ function DialMetric({ title, score, description, color, inverse = false }) {
           />
         </svg>
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <span className={cn("text-4xl font-bold", config.text)}>{displayScore}</span>
-          <span className="text-sm text-zinc-500">/100</span>
+          <span className={cn("text-3xl md:text-4xl font-bold", config.text)}>{displayScore}</span>
+          <span className="text-xs md:text-sm text-zinc-500">/100</span>
         </div>
       </div>
       
-      <div className={cn("inline-block px-4 py-2 rounded-full font-bold text-sm", config.text, config.bg, config.border, "border")}>
+      <div className={cn("inline-block px-3 md:px-4 py-1.5 md:py-2 rounded-full font-bold text-xs md:text-sm", config.text, config.bg, config.border, "border")}>
         {displayScore >= 80 ? 'Excellent' : displayScore >= 60 ? 'Good' : displayScore >= 40 ? 'Fair' : 'Poor'}
       </div>
     </motion.div>

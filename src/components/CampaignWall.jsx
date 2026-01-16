@@ -78,44 +78,44 @@ export default function CampaignWall() {
   const [filterStatus, setFilterStatus] = useState('all');
 
   return (
-    <div className="p-8 space-y-6">
+    <div className="p-4 md:p-8 space-y-4 md:space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Campaign Wall</h1>
-          <p className="text-zinc-500">Visual content organization across all campaigns</p>
+          <h1 className="text-2xl md:text-3xl font-bold mb-1 md:mb-2">Campaign Wall</h1>
+          <p className="text-sm md:text-base text-zinc-500">Visual content organization across all campaigns</p>
         </div>
         
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 md:gap-3 w-full sm:w-auto">
           {/* View Toggle */}
-          <div className="flex items-center gap-2 bg-white border border-zinc-200 rounded-xl p-1">
+          <div className="flex items-center gap-1 md:gap-2 bg-white border border-zinc-200 rounded-xl p-1 flex-1 sm:flex-initial">
             <button
               onClick={() => setViewMode('campaign')}
               className={cn(
-                "px-4 py-2 rounded-lg text-sm font-bold transition-all",
+                "px-2 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-bold transition-all",
                 viewMode === 'campaign' ? "bg-zinc-900 text-white" : "text-zinc-500 hover:text-zinc-900"
               )}
             >
-              <Grid3x3 size={16} className="inline mr-2" />
-              Campaign View
+              <Grid3x3 size={14} className="md:w-4 md:h-4 inline md:mr-2" />
+              <span className="hidden sm:inline">Campaign View</span>
             </button>
             <button
               onClick={() => setViewMode('creator')}
               className={cn(
-                "px-4 py-2 rounded-lg text-sm font-bold transition-all",
+                "px-2 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-bold transition-all",
                 viewMode === 'creator' ? "bg-zinc-900 text-white" : "text-zinc-500 hover:text-zinc-900"
               )}
             >
-              <List size={16} className="inline mr-2" />
-              Creator View
+              <List size={14} className="md:w-4 md:h-4 inline md:mr-2" />
+              <span className="hidden sm:inline">Creator View</span>
             </button>
           </div>
           
           {/* Filter */}
-          <button className="flex items-center gap-2 px-4 py-2.5 bg-white border border-zinc-200 rounded-xl hover:border-zinc-300 transition-colors">
-            <Filter size={16} />
-            <span className="text-sm font-bold">Filter</span>
-            <ChevronDown size={16} />
+          <button className="flex items-center gap-1 md:gap-2 px-3 md:px-4 py-2 md:py-2.5 bg-white border border-zinc-200 rounded-xl hover:border-zinc-300 transition-colors">
+            <Filter size={14} className="md:w-4 md:h-4" />
+            <span className="text-xs md:text-sm font-bold hidden sm:inline">Filter</span>
+            <ChevronDown size={14} className="md:w-4 md:h-4" />
           </button>
         </div>
       </div>
@@ -139,7 +139,7 @@ export default function CampaignWall() {
       </div>
 
       {/* Aggregated Stats */}
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6">
         <StatCard title="Total Reach" value="1.2M" change="+18%" />
         <StatCard title="Avg. Engagement" value="9.8%" change="+2.4%" />
         <StatCard title="Content Pieces" value="24" change="+6" />
@@ -160,13 +160,13 @@ function StatCard({ title, value, change }) {
   return (
     <motion.div
       whileHover={{ y: -2 }}
-      className="bg-white rounded-2xl border border-zinc-200 p-6 shadow-sm"
+      className="bg-white rounded-xl md:rounded-2xl border border-zinc-200 p-4 md:p-6 shadow-sm"
     >
-      <p className="text-sm text-zinc-500 mb-1">{title}</p>
+      <p className="text-xs md:text-sm text-zinc-500 mb-1">{title}</p>
       <div className="flex items-end justify-between">
-        <h3 className="text-3xl font-bold">{value}</h3>
+        <h3 className="text-2xl md:text-3xl font-bold">{value}</h3>
         {change && (
-          <span className="text-sm font-bold text-emerald-600">
+          <span className="text-xs md:text-sm font-bold text-emerald-600">
             {change}
           </span>
         )}
@@ -180,27 +180,27 @@ function CreatorContentRow({ creator }) {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl border border-zinc-200 p-6 shadow-sm"
+      className="bg-white rounded-xl md:rounded-2xl border border-zinc-200 p-4 md:p-6 shadow-sm"
     >
       {/* Creator Header */}
-      <div className="flex items-center gap-4 mb-6">
+      <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-6">
         <img
           src={creator.avatar}
           alt={creator.name}
-          className="w-12 h-12 rounded-full border-2 border-zinc-200"
+          className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-zinc-200 flex-shrink-0"
         />
-        <div className="flex-1">
-          <h3 className="font-bold text-lg">{creator.name}</h3>
-          <p className="text-sm text-zinc-500">{creator.handle}</p>
+        <div className="flex-1 min-w-0">
+          <h3 className="font-bold text-base md:text-lg truncate">{creator.name}</h3>
+          <p className="text-xs md:text-sm text-zinc-500 truncate">{creator.handle}</p>
         </div>
-        <div className="text-right">
-          <p className="text-sm text-zinc-500">Content</p>
-          <p className="text-2xl font-bold">{creator.content.length}</p>
+        <div className="text-right flex-shrink-0">
+          <p className="text-xs md:text-sm text-zinc-500">Content</p>
+          <p className="text-xl md:text-2xl font-bold">{creator.content.length}</p>
         </div>
       </div>
 
       {/* Content Grid */}
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4">
         {creator.content.map((content) => (
           <ContentCard key={content.id} content={content} />
         ))}
@@ -211,8 +211,8 @@ function CreatorContentRow({ creator }) {
           whileTap={{ scale: 0.98 }}
           className="aspect-[9/16] rounded-xl border-2 border-dashed border-zinc-200 flex flex-col items-center justify-center text-zinc-400 hover:border-zinc-900 hover:text-zinc-900 transition-colors"
         >
-          <Plus size={24} />
-          <span className="text-xs font-bold mt-2">Request More</span>
+          <Plus size={20} className="md:w-6 md:h-6" />
+          <span className="text-[10px] md:text-xs font-bold mt-1 md:mt-2">Request More</span>
         </motion.button>
       </div>
     </motion.div>

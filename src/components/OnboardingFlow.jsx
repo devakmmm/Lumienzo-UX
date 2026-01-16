@@ -232,7 +232,7 @@ export default function OnboardingFlow({ onComplete }) {
       </div>
 
       {/* Right Pane - Content */}
-      <div className="flex-1 flex flex-col items-center justify-center p-6 md:p-12 bg-white relative overflow-y-auto">
+      <div className="flex-1 flex flex-col items-center justify-center p-4 md:p-6 lg:p-12 bg-white relative overflow-y-auto">
         <div className="w-full max-w-2xl">
           <AnimatePresence mode="wait">
             <motion.div
@@ -267,30 +267,30 @@ export default function OnboardingFlow({ onComplete }) {
 
           {/* Navigation - Step 1 */}
           {step === 1 && persona && (
-            <div className="mt-12 flex justify-center">
+            <div className="mt-8 md:mt-12 flex justify-center">
               <button 
                 onClick={nextStep}
-                className="px-12 py-4 rounded-xl font-bold flex items-center gap-2 transition-colors shadow-2xl"
+                className="px-8 md:px-12 py-3 md:py-4 rounded-xl font-bold flex items-center gap-2 transition-colors shadow-2xl text-sm md:text-base w-full sm:w-auto"
                 style={{ backgroundColor: YELLOW, color: BLACK }}
               >
-                Get Started <ArrowRight className="w-5 h-5" />
+                Get Started <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
               </button>
             </div>
           )}
 
           {/* Navigation - Middle Steps */}
           {step > 1 && step < (persona === 'creator' ? 7 : 6) && (
-            <div className="mt-12 flex items-center justify-between">
+            <div className="mt-8 md:mt-12 flex items-center justify-between gap-3">
               <button 
                 onClick={prevStep}
-                className="flex items-center gap-2 text-zinc-500 font-medium hover:text-zinc-900 transition-colors"
+                className="flex items-center gap-2 text-zinc-500 font-medium hover:text-zinc-900 transition-colors text-sm md:text-base px-3 py-2"
               >
-                <ArrowLeft className="w-4 h-4" /> Back
+                <ArrowLeft className="w-4 h-4" /> <span className="hidden sm:inline">Back</span>
               </button>
               <button 
                 onClick={nextStep}
                 disabled={!canProceed()}
-                className="px-8 py-3 rounded-xl font-bold flex items-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                className="px-6 md:px-8 py-2.5 md:py-3 rounded-xl font-bold flex items-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg text-sm md:text-base flex-1 sm:flex-initial"
                 style={{ backgroundColor: YELLOW, color: BLACK }}
               >
                 Continue <ArrowRight className="w-4 h-4" />
@@ -300,19 +300,19 @@ export default function OnboardingFlow({ onComplete }) {
 
           {/* Navigation - Final Steps */}
           {step >= (persona === 'creator' ? 7 : 6) && step !== 1 && (
-            <div className="mt-12 flex items-center justify-between">
+            <div className="mt-8 md:mt-12 flex items-center justify-between gap-3">
               {step < (persona === 'creator' ? 8 : 7) && (
                 <button 
                   onClick={prevStep}
-                  className="flex items-center gap-2 text-zinc-500 font-medium hover:text-zinc-900 transition-colors"
+                  className="flex items-center gap-2 text-zinc-500 font-medium hover:text-zinc-900 transition-colors text-sm md:text-base px-3 py-2"
                 >
-                  <ArrowLeft className="w-4 h-4" /> Back
+                  <ArrowLeft className="w-4 h-4" /> <span className="hidden sm:inline">Back</span>
                 </button>
               )}
               <button 
                 onClick={nextStep}
                 disabled={!canProceed()}
-                className="px-12 py-4 rounded-xl font-bold flex items-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-2xl ml-auto"
+                className="px-8 md:px-12 py-3 md:py-4 rounded-xl font-bold flex items-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-2xl text-sm md:text-base flex-1 sm:flex-initial ml-auto"
                 style={{ backgroundColor: YELLOW, color: BLACK }}
               >
                 {step === (persona === 'creator' ? 7 : 6) ? 'Complete Setup' : 'Go to Dashboard'} <ArrowRight className="w-4 h-4" />
@@ -328,13 +328,13 @@ export default function OnboardingFlow({ onComplete }) {
 function renderStep(step, persona, props) {
   // Step 1: Persona Selection
   if (step === 1) {
-    return (
-      <div className="space-y-8">
-        <div className="space-y-2 text-center md:text-left">
-          <h1 className="text-4xl font-bold tracking-tight">How will you use Lumienzo?</h1>
-          <p className="text-zinc-500 text-lg">Choose the profile that fits your goals.</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  return (
+    <div className="space-y-6 md:space-y-8">
+      <div className="space-y-2 text-center md:text-left">
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tight">How will you use Lumienzo?</h1>
+        <p className="text-zinc-500 text-base md:text-lg">Choose the profile that fits your goals.</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           <PersonaCard 
             icon={<Users className="w-7 h-7" />}
             title="I'm a Creator"
@@ -384,13 +384,13 @@ function PersonaCard({ icon, title, description, selected, onClick }) {
       whileTap={{ scale: 0.98 }}
       onClick={onClick}
       className={cn(
-        "group p-8 rounded-3xl border-2 text-left transition-all cursor-pointer",
+        "group p-6 md:p-8 rounded-2xl md:rounded-3xl border-2 text-left transition-all cursor-pointer",
         selected ? "border-zinc-900 bg-zinc-900 shadow-2xl" : "border-zinc-200 bg-white hover:border-zinc-300"
       )}
     >
-      <div className="flex items-center gap-4 mb-4">
+      <div className="flex items-center gap-3 md:gap-4 mb-3 md:mb-4">
         <div 
-          className="p-4 rounded-2xl transition-all"
+          className="p-3 md:p-4 rounded-xl md:rounded-2xl transition-all"
           style={{ 
             backgroundColor: selected ? YELLOW : '#F4F4F5',
             color: selected ? BLACK : '#52525B'
@@ -399,10 +399,10 @@ function PersonaCard({ icon, title, description, selected, onClick }) {
           {icon}
         </div>
       </div>
-      <p className={cn("font-bold text-xl mb-2", selected ? "text-white" : "text-zinc-900")}>
+      <p className={cn("font-bold text-lg md:text-xl mb-2", selected ? "text-white" : "text-zinc-900")}>
         {title}
       </p>
-      <p className={cn("text-sm", selected ? "text-zinc-300" : "text-zinc-500")}>
+      <p className={cn("text-xs md:text-sm", selected ? "text-zinc-300" : "text-zinc-500")}>
         {description}
       </p>
     </motion.button>
@@ -411,12 +411,12 @@ function PersonaCard({ icon, title, description, selected, onClick }) {
 
 function ConnectSocialStep({ connectedPlatforms, togglePlatform }) {
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 md:space-y-8">
       <div className="space-y-2">
-        <h1 className="text-4xl font-bold tracking-tight">Connect your socials</h1>
-        <p className="text-zinc-500 text-lg">We use this to verify your reach and build your profile.</p>
+        <h1 className="text-3xl md:text-4xl font-bold tracking-tight">Connect your socials</h1>
+        <p className="text-zinc-500 text-base md:text-lg">We use this to verify your reach and build your profile.</p>
       </div>
-      <div className="space-y-4">
+      <div className="space-y-3 md:space-y-4">
         {[
           { name: 'Instagram', icon: <Instagram className="w-5 h-5 text-pink-600" />, color: 'pink' },
           { name: 'TikTok', icon: <Video className="w-5 h-5 text-zinc-900" />, color: 'zinc' },
@@ -426,36 +426,36 @@ function ConnectSocialStep({ connectedPlatforms, togglePlatform }) {
             key={platform.name}
             onClick={() => togglePlatform(platform.name)}
             className={cn(
-              "w-full p-5 rounded-2xl border-2 flex items-center justify-between transition-all",
+              "w-full p-4 md:p-5 rounded-xl md:rounded-2xl border-2 flex items-center justify-between transition-all",
               connectedPlatforms.includes(platform.name)
                 ? "border-zinc-900 bg-zinc-900" 
                 : "border-zinc-200 hover:border-zinc-300 bg-white"
             )}
             style={connectedPlatforms.includes(platform.name) ? { boxShadow: `0 0 0 4px ${YELLOW}30` } : {}}
           >
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3 md:gap-4">
               {platform.icon}
               <span className={cn(
-                "font-bold text-lg",
+                "font-bold text-base md:text-lg",
                 connectedPlatforms.includes(platform.name) ? "text-white" : "text-zinc-900"
               )}>
                 {platform.name}
               </span>
             </div>
             {connectedPlatforms.includes(platform.name) ? (
-              <CheckCircle2 className="w-6 h-6" style={{ color: YELLOW }} />
+              <CheckCircle2 className="w-5 h-5 md:w-6 md:h-6" style={{ color: YELLOW }} />
             ) : (
-              <span className="text-sm font-bold text-zinc-400 uppercase">Connect</span>
+              <span className="text-xs md:text-sm font-bold text-zinc-400 uppercase">Connect</span>
             )}
           </button>
         ))}
       </div>
       <div 
-        className="p-5 rounded-2xl flex gap-3 items-start"
+        className="p-4 md:p-5 rounded-xl md:rounded-2xl flex gap-2 md:gap-3 items-start"
         style={{ backgroundColor: `${YELLOW}30`, border: `2px solid ${YELLOW}60` }}
       >
-        <ShieldCheck className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: BLACK }} />
-        <p className="text-sm leading-relaxed" style={{ color: '#3f3f46' }}>
+        <ShieldCheck className="w-4 h-4 md:w-5 md:h-5 mt-0.5 flex-shrink-0" style={{ color: BLACK }} />
+        <p className="text-xs md:text-sm leading-relaxed" style={{ color: '#3f3f46' }}>
           <strong>Bank-Level Security:</strong> We only request limited "Read-Only" permissions to verify your reach. Your passwords are never shared with us.
         </p>
       </div>
