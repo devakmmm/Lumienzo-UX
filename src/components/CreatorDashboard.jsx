@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   LayoutGrid, 
   User, 
@@ -12,12 +12,18 @@ import {
   MapPin, 
   ArrowUpRight,
   MoreVertical,
-  Zap
+  Zap,
+  Sparkles,
+  Menu,
+  X
 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import LumienzoLogo from './LumienzoLogo';
+import Opportunities from './Opportunities';
+import MediaKit from './MediaKit';
+import LumiAssistant from './LumiAssistant';
 
 // Brand colors
 const YELLOW = '#FEFD7F';
@@ -28,6 +34,9 @@ function cn(...inputs) {
 }
 
 export default function CreatorDashboard() {
+  const [selectedView, setSelectedView] = useState('home');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <div className="flex h-screen bg-zinc-50 overflow-hidden font-sans">
       {/* Sidebar - Desktop */}
@@ -37,10 +46,37 @@ export default function CreatorDashboard() {
         </div>
 
         <nav className="flex-1 space-y-1">
-          <NavItem icon={<LayoutGrid size={20} />} label="Dashboard" active />
-          <NavItem icon={<FileText size={20} />} label="Portfolio" />
-          <NavItem icon={<CreditCard size={20} />} label="Wallet" />
-          <NavItem icon={<TrendingUp size={20} />} label="Analytics" />
+          <NavItem 
+            icon={<LayoutGrid size={20} />} 
+            label="Dashboard" 
+            active={selectedView === 'home'}
+            onClick={() => setSelectedView('home')}
+          />
+          <NavItem 
+            icon={<Sparkles size={20} />} 
+            label="Opportunities" 
+            active={selectedView === 'opportunities'}
+            onClick={() => setSelectedView('opportunities')}
+            badge={5}
+          />
+          <NavItem 
+            icon={<FileText size={20} />} 
+            label="Media Kit" 
+            active={selectedView === 'mediakit'}
+            onClick={() => setSelectedView('mediakit')}
+          />
+          <NavItem 
+            icon={<CreditCard size={20} />} 
+            label="Wallet" 
+            active={selectedView === 'wallet'}
+            onClick={() => setSelectedView('wallet')}
+          />
+          <NavItem 
+            icon={<TrendingUp size={20} />} 
+            label="Analytics" 
+            active={selectedView === 'analytics'}
+            onClick={() => setSelectedView('analytics')}
+          />
           <NavItem icon={<Sliders size={20} />} label="Settings" />
         </nav>
 
@@ -61,22 +97,99 @@ export default function CreatorDashboard() {
         </div>
       </aside>
 
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed inset-0 bg-black/50 z-40 md:hidden"
+            />
+            <motion.aside
+              initial={{ x: -300 }}
+              animate={{ x: 0 }}
+              exit={{ x: -300 }}
+              className="fixed left-0 top-0 bottom-0 w-64 bg-zinc-50 border-r border-zinc-200 flex-col py-8 px-4 shadow-xl z-50 md:hidden overflow-y-auto"
+            >
+              <div className="flex items-center justify-between mb-8">
+                <LumienzoLogo size="xl" />
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 hover:bg-zinc-100 rounded-lg transition-colors"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              <nav className="flex-1 space-y-1">
+                <NavItem 
+                  icon={<LayoutGrid size={20} />} 
+                  label="Dashboard" 
+                  active={selectedView === 'home'}
+                  onClick={() => { setSelectedView('home'); setMobileMenuOpen(false); }}
+                />
+                <NavItem 
+                  icon={<Sparkles size={20} />} 
+                  label="Opportunities" 
+                  active={selectedView === 'opportunities'}
+                  onClick={() => { setSelectedView('opportunities'); setMobileMenuOpen(false); }}
+                  badge={5}
+                />
+                <NavItem 
+                  icon={<FileText size={20} />} 
+                  label="Media Kit" 
+                  active={selectedView === 'mediakit'}
+                  onClick={() => { setSelectedView('mediakit'); setMobileMenuOpen(false); }}
+                />
+                <NavItem 
+                  icon={<CreditCard size={20} />} 
+                  label="Wallet" 
+                  active={selectedView === 'wallet'}
+                  onClick={() => { setSelectedView('wallet'); setMobileMenuOpen(false); }}
+                />
+                <NavItem 
+                  icon={<TrendingUp size={20} />} 
+                  label="Analytics" 
+                  active={selectedView === 'analytics'}
+                  onClick={() => { setSelectedView('analytics'); setMobileMenuOpen(false); }}
+                />
+                <NavItem icon={<Sliders size={20} />} label="Settings" onClick={() => setMobileMenuOpen(false)} />
+              </nav>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col overflow-hidden relative">
         {/* Top Header */}
         <header className="h-16 md:h-20 bg-white border-b border-zinc-200 flex items-center justify-between px-4 md:px-8 shrink-0">
-          <div className="flex-1 max-w-xl hidden md:block">
-             <div className="relative group">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" size={18} />
-                <input 
-                  type="text" 
-                  placeholder="Search projects, brands, or tasks... (⌘K)" 
-                  className="w-full bg-zinc-50 border border-zinc-100 rounded-xl py-2.5 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-zinc-900/20 focus:bg-white transition-all text-sm"
-                />
-             </div>
+          <div className="flex items-center gap-3 md:gap-0">
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="md:hidden p-2 hover:bg-zinc-100 rounded-lg transition-colors"
+            >
+              <Menu size={20} />
+            </button>
+            <div className="md:hidden">
+              <LumienzoLogo size="md" />
+            </div>
+            <div className="flex-1 max-w-xl hidden md:block">
+               <div className="relative group">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" size={18} />
+                  <input 
+                    type="text" 
+                    placeholder="Search projects, brands, or tasks... (⌘K)" 
+                    className="w-full bg-zinc-50 border border-zinc-100 rounded-xl py-2.5 pl-11 pr-4 focus:outline-none focus:ring-2 focus:ring-zinc-900/20 focus:bg-white transition-all text-sm"
+                  />
+               </div>
+            </div>
           </div>
           
-          <div className="flex items-center gap-3 md:gap-6 w-full md:w-auto justify-end">
+          <div className="flex items-center gap-3 md:gap-6">
              <button className="relative text-zinc-400 hover:text-zinc-900 transition-colors p-2 md:p-0">
                 <Bell size={20} className="md:w-[22px] md:h-[22px]" />
                 <span className="absolute top-1 right-1 md:top-0 md:right-0 w-2 h-2 bg-rose-500 rounded-full border-2 border-white" />
@@ -107,89 +220,37 @@ export default function CreatorDashboard() {
           </div>
         </div>
 
-        {/* Scrollable Dashboard Body */}
-        <div className="flex-1 overflow-y-auto p-4 md:p-8 flex flex-col lg:flex-row gap-6 md:gap-8">
-           {/* Left Section - Work Feed & Analytics (65%) */}
-           <div className="flex-1 space-y-6 md:space-y-8">
-              {/* Stats Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
-                 <StatCard title="Total Earnings" value="$12,850" change="+12.5%" trend="up" />
-                 <StatCard title="Active Campaigns" value="6" change="+2" trend="up" />
-                 <StatCard title="Total Reach" value="2.4M" change="-4.1%" trend="down" />
-              </div>
-
-              {/* Work Feed - Urgent Actions */}
-              <section className="space-y-3 md:space-y-4">
-                 <div className="flex items-center justify-between">
-                    <h2 className="text-lg md:text-xl font-bold">Urgent Actions</h2>
-                    <button className="text-xs md:text-sm font-bold text-zinc-900 hover:underline">View All</button>
-                 </div>
-                 <div className="space-y-2 md:space-y-3">
-                    <ActionItem 
-                      title="Sign Contract: Samsung Galaxy S24 Ultra"
-                      subtitle="Deadline: Today, 6:00 PM"
-                      badge="High Priority"
-                      badgeColor="bg-rose-100 text-rose-600"
-                    />
-                    <ActionItem 
-                      title="Submit Script: Nike 'Move You' Campaign"
-                      subtitle="Status: Draft required"
-                      badge="Awaiting Script"
-                      badgeColor="bg-amber-100 text-amber-600"
-                    />
-                 </div>
-              </section>
-
-              {/* Active Projects */}
-              <section className="space-y-3 md:space-y-4">
-                 <h2 className="text-lg md:text-xl font-bold">Active Projects</h2>
-                 <div className="bg-white rounded-xl md:rounded-2xl border border-zinc-200 overflow-hidden divide-y divide-zinc-100 shadow-sm">
-                    <ProjectRow brand="Samsung" title="S24 Ultra Tech Review" status="Scripting" progress={35} />
-                    <ProjectRow brand="Nike" title="Move You Series" status="Funded" progress={100} />
-                    <ProjectRow brand="Adobe" title="Max 2024 Promotion" status="Review" progress={80} />
-                 </div>
-              </section>
-           </div>
-
-           {/* Right Section - Financial Hub & Health (35%) */}
-           <div className="w-full lg:w-[380px] space-y-6 md:space-y-8">
-              {/* Financial Hub */}
-              <WalletCard />
-
-              {/* Lumi Health Check */}
-              <HealthCheck />
-
-              {/* Audience Deep Dive */}
-              <div className="bg-white rounded-xl md:rounded-2xl border border-zinc-200 p-4 md:p-6 shadow-sm">
-                 <h3 className="text-base md:text-lg font-bold mb-4 md:mb-6">Audience Geography</h3>
-                 <div className="space-y-3 md:space-y-4">
-                    <GeoItem country="United States" percentage={42} />
-                    <GeoItem country="United Kingdom" percentage={18} />
-                    <GeoItem country="Canada" percentage={12} />
-                    <GeoItem country="Germany" percentage={9} />
-                 </div>
-                 <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-zinc-100">
-                    <button className="w-full py-2 md:py-2.5 rounded-xl border border-zinc-200 text-xs md:text-sm font-bold hover:bg-zinc-50 transition-colors">
-                       View Full Analytics
-                    </button>
-                 </div>
-              </div>
-           </div>
+        {/* Dashboard Content */}
+        <div className="flex-1 overflow-y-auto">
+          <AnimatePresence mode="wait">
+            {selectedView === 'home' && <DashboardHome />}
+            {selectedView === 'opportunities' && <Opportunities />}
+            {selectedView === 'mediakit' && <MediaKit />}
+          </AnimatePresence>
         </div>
 
         {/* Mobile Bottom Nav */}
         <nav className="md:hidden h-20 bg-white/80 backdrop-blur-xl border-t border-zinc-200 flex items-center justify-around px-6 shrink-0">
-           <button className="text-zinc-900 flex flex-col items-center gap-1">
+           <button 
+             onClick={() => setSelectedView('home')}
+             className={cn("flex flex-col items-center gap-1", selectedView === 'home' ? "text-zinc-900" : "text-zinc-400")}
+           >
               <LayoutGrid size={24} />
               <span className="text-[10px] font-bold">Home</span>
            </button>
-           <button className="text-zinc-400 flex flex-col items-center gap-1">
-              <FileText size={24} />
-              <span className="text-[10px] font-bold">Tasks</span>
+           <button 
+             onClick={() => setSelectedView('opportunities')}
+             className={cn("flex flex-col items-center gap-1", selectedView === 'opportunities' ? "text-zinc-900" : "text-zinc-400")}
+           >
+              <Sparkles size={24} />
+              <span className="text-[10px] font-bold">Opps</span>
            </button>
-           <button className="text-zinc-400 flex flex-col items-center gap-1">
-              <CreditCard size={24} />
-              <span className="text-[10px] font-bold">Wallet</span>
+           <button 
+             onClick={() => setSelectedView('mediakit')}
+             className={cn("flex flex-col items-center gap-1", selectedView === 'mediakit' ? "text-zinc-900" : "text-zinc-400")}
+           >
+              <FileText size={24} />
+              <span className="text-[10px] font-bold">Media Kit</span>
            </button>
            <button className="text-zinc-400 flex flex-col items-center gap-1">
               <User size={24} />
@@ -197,20 +258,111 @@ export default function CreatorDashboard() {
            </button>
         </nav>
       </main>
+
+      {/* Lumi AI Assistant */}
+      <LumiAssistant userType="creator" />
     </div>
   );
 }
 
-function NavItem({ icon, label, active = false }) {
+function DashboardHome() {
   return (
-    <button className={cn(
-      "w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all",
-      active 
-        ? "bg-zinc-900 text-white shadow-lg shadow-zinc-200" 
-        : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100"
-    )}>
-      {icon}
-      <span>{label}</span>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      className="p-4 md:p-8 flex flex-col lg:flex-row gap-6 md:gap-8"
+    >
+      {/* Left Section - Work Feed & Analytics (65%) */}
+      <div className="flex-1 space-y-6 md:space-y-8">
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
+          <StatCard title="Total Earnings" value="$12,850" change="+12.5%" trend="up" />
+          <StatCard title="Active Campaigns" value="6" change="+2" trend="up" />
+          <StatCard title="Total Reach" value="2.4M" change="-4.1%" trend="down" />
+        </div>
+
+        {/* Work Feed - Urgent Actions */}
+        <section className="space-y-3 md:space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-lg md:text-xl font-bold">Urgent Actions</h2>
+            <button className="text-xs md:text-sm font-bold text-zinc-900 hover:underline">View All</button>
+          </div>
+          <div className="space-y-2 md:space-y-3">
+            <ActionItem 
+              title="Sign Contract: Samsung Galaxy S24 Ultra"
+              subtitle="Deadline: Today, 6:00 PM"
+              badge="High Priority"
+              badgeColor="bg-rose-100 text-rose-600"
+            />
+            <ActionItem 
+              title="Submit Script: Nike 'Move You' Campaign"
+              subtitle="Status: Draft required"
+              badge="Awaiting Script"
+              badgeColor="bg-amber-100 text-amber-600"
+            />
+          </div>
+        </section>
+
+        {/* Active Projects */}
+        <section className="space-y-3 md:space-y-4">
+          <h2 className="text-lg md:text-xl font-bold">Active Projects</h2>
+          <div className="bg-white rounded-xl md:rounded-2xl border border-zinc-200 overflow-hidden divide-y divide-zinc-100 shadow-sm">
+            <ProjectRow brand="Samsung" title="S24 Ultra Tech Review" status="Scripting" progress={35} />
+            <ProjectRow brand="Nike" title="Move You Series" status="Funded" progress={100} />
+            <ProjectRow brand="Adobe" title="Max 2024 Promotion" status="Review" progress={80} />
+          </div>
+        </section>
+      </div>
+
+      {/* Right Section - Financial Hub & Health (35%) */}
+      <div className="w-full lg:w-[380px] space-y-6 md:space-y-8">
+        {/* Financial Hub */}
+        <WalletCard />
+
+        {/* Lumi Health Check */}
+        <HealthCheck />
+
+        {/* Audience Deep Dive */}
+        <div className="bg-white rounded-xl md:rounded-2xl border border-zinc-200 p-4 md:p-6 shadow-sm">
+          <h3 className="text-base md:text-lg font-bold mb-4 md:mb-6">Audience Geography</h3>
+          <div className="space-y-3 md:space-y-4">
+            <GeoItem country="United States" percentage={42} />
+            <GeoItem country="United Kingdom" percentage={18} />
+            <GeoItem country="Canada" percentage={12} />
+            <GeoItem country="Germany" percentage={9} />
+          </div>
+          <div className="mt-6 md:mt-8 pt-4 md:pt-6 border-t border-zinc-100">
+            <button className="w-full py-2 md:py-2.5 rounded-xl border border-zinc-200 text-xs md:text-sm font-bold hover:bg-zinc-50 transition-colors">
+              View Full Analytics
+            </button>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function NavItem({ icon, label, active = false, onClick, badge }) {
+  return (
+    <button 
+      onClick={onClick}
+      className={cn(
+        "w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl font-medium transition-all",
+        active 
+          ? "bg-zinc-900 text-white shadow-lg shadow-zinc-200" 
+          : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100"
+      )}
+    >
+      <div className="flex items-center gap-3">
+        {icon}
+        <span>{label}</span>
+      </div>
+      {badge && (
+        <span className="px-2 py-0.5 bg-rose-500 text-white text-xs font-bold rounded-full">
+          {badge}
+        </span>
+      )}
     </button>
   );
 }

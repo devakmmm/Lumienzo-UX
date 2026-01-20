@@ -31,7 +31,9 @@ import CampaignWall from './CampaignWall';
 import VettingEngine from './VettingEngine';
 import PipelineView from './PipelineView';
 import LogisticsHub from './LogisticsHub';
+import CreatorNetwork from './CreatorNetwork';
 import LumienzoLogo from './LumienzoLogo';
+import LumiAssistant from './LumiAssistant';
 
 // Brand colors
 const YELLOW = '#FEFD7F';
@@ -114,7 +116,12 @@ export default function BrandDashboard() {
             active={selectedView === 'logistics'} 
             onClick={() => setSelectedView('logistics')}
           />
-          <NavItem icon={<Users size={20} />} label="Creator Network" />
+          <NavItem 
+            icon={<Users size={20} />} 
+            label="Creator Network" 
+            active={selectedView === 'network'} 
+            onClick={() => setSelectedView('network')}
+          />
           <NavItem icon={<Sliders size={20} />} label="Settings" />
         </nav>
 
@@ -188,7 +195,12 @@ export default function BrandDashboard() {
                   active={selectedView === 'logistics'} 
                   onClick={() => { setSelectedView('logistics'); setMobileMenuOpen(false); }}
                 />
-                <NavItem icon={<Users size={20} />} label="Creator Network" onClick={() => setMobileMenuOpen(false)} />
+                <NavItem 
+                  icon={<Users size={20} />} 
+                  label="Creator Network" 
+                  active={selectedView === 'network'} 
+                  onClick={() => { setSelectedView('network'); setMobileMenuOpen(false); }}
+                />
                 <NavItem icon={<Sliders size={20} />} label="Settings" onClick={() => setMobileMenuOpen(false)} />
               </nav>
 
@@ -270,9 +282,13 @@ export default function BrandDashboard() {
             {selectedView === 'vetting' && <VettingEngine />}
             {selectedView === 'pipeline' && <PipelineView />}
             {selectedView === 'logistics' && <LogisticsHub />}
+            {selectedView === 'network' && <CreatorNetwork />}
           </AnimatePresence>
         </div>
       </main>
+
+      {/* Lumi AI Assistant */}
+      <LumiAssistant userType="brand" />
     </div>
   );
 }
