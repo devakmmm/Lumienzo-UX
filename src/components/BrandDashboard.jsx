@@ -32,6 +32,7 @@ import VettingEngine from './VettingEngine';
 import PipelineView from './PipelineView';
 import LogisticsHub from './LogisticsHub';
 import CreatorNetwork from './CreatorNetwork';
+import BrandSettings from './BrandSettings';
 import LumienzoLogo from './LumienzoLogo';
 import LumiAssistant from './LumiAssistant';
 
@@ -116,13 +117,18 @@ export default function BrandDashboard() {
             active={selectedView === 'logistics'} 
             onClick={() => setSelectedView('logistics')}
           />
-          <NavItem 
+<NavItem 
             icon={<Users size={20} />} 
             label="Creator Network" 
-            active={selectedView === 'network'} 
+            active={selectedView === 'network'}
             onClick={() => setSelectedView('network')}
           />
-          <NavItem icon={<Sliders size={20} />} label="Settings" />
+          <NavItem 
+            icon={<Sliders size={20} />} 
+            label="Settings" 
+            active={selectedView === 'settings'}
+            onClick={() => setSelectedView('settings')}
+          />
         </nav>
 
         <motion.button 
@@ -195,13 +201,18 @@ export default function BrandDashboard() {
                   active={selectedView === 'logistics'} 
                   onClick={() => { setSelectedView('logistics'); setMobileMenuOpen(false); }}
                 />
-                <NavItem 
+<NavItem 
                   icon={<Users size={20} />} 
                   label="Creator Network" 
-                  active={selectedView === 'network'} 
+                  active={selectedView === 'network'}
                   onClick={() => { setSelectedView('network'); setMobileMenuOpen(false); }}
                 />
-                <NavItem icon={<Sliders size={20} />} label="Settings" onClick={() => setMobileMenuOpen(false)} />
+                <NavItem 
+                  icon={<Sliders size={20} />} 
+                  label="Settings" 
+                  active={selectedView === 'settings'}
+                  onClick={() => { setSelectedView('settings'); setMobileMenuOpen(false); }}
+                />
               </nav>
 
               <motion.button 
@@ -283,6 +294,7 @@ export default function BrandDashboard() {
             {selectedView === 'pipeline' && <PipelineView />}
             {selectedView === 'logistics' && <LogisticsHub />}
             {selectedView === 'network' && <CreatorNetwork />}
+            {selectedView === 'settings' && <BrandSettings />}
           </AnimatePresence>
         </div>
       </main>

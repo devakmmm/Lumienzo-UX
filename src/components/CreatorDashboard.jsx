@@ -23,6 +23,7 @@ import { twMerge } from 'tailwind-merge';
 import LumienzoLogo from './LumienzoLogo';
 import Opportunities from './Opportunities';
 import MediaKit from './MediaKit';
+import CreatorSettings from './CreatorSettings';
 import LumiAssistant from './LumiAssistant';
 
 // Brand colors
@@ -77,7 +78,12 @@ export default function CreatorDashboard() {
             active={selectedView === 'analytics'}
             onClick={() => setSelectedView('analytics')}
           />
-          <NavItem icon={<Sliders size={20} />} label="Settings" />
+          <NavItem 
+            icon={<Sliders size={20} />} 
+            label="Settings" 
+            active={selectedView === 'settings'}
+            onClick={() => setSelectedView('settings')}
+          />
         </nav>
 
         <div className="mt-auto p-4 bg-white rounded-2xl border border-zinc-200 shadow-sm">
@@ -156,7 +162,12 @@ export default function CreatorDashboard() {
                   active={selectedView === 'analytics'}
                   onClick={() => { setSelectedView('analytics'); setMobileMenuOpen(false); }}
                 />
-                <NavItem icon={<Sliders size={20} />} label="Settings" onClick={() => setMobileMenuOpen(false)} />
+                <NavItem 
+                  icon={<Sliders size={20} />} 
+                  label="Settings" 
+                  active={selectedView === 'settings'}
+                  onClick={() => { setSelectedView('settings'); setMobileMenuOpen(false); }}
+                />
               </nav>
             </motion.aside>
           </>
@@ -226,6 +237,7 @@ export default function CreatorDashboard() {
             {selectedView === 'home' && <DashboardHome />}
             {selectedView === 'opportunities' && <Opportunities />}
             {selectedView === 'mediakit' && <MediaKit />}
+            {selectedView === 'settings' && <CreatorSettings />}
           </AnimatePresence>
         </div>
 
